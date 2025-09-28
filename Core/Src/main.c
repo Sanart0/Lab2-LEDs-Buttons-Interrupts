@@ -66,10 +66,88 @@ void MX_USB_HOST_Process(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	  led_mode++;
-	  led_mode %= 4;
+void led_mode_0() {
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+}
+
+void led_mode_1() {
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+}
+
+void led_mode_2() {
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
+	HAL_Delay(FQ_MS);
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
+	HAL_Delay(FQ_MS);
+}
+
+void led_mode_3() {
+	for (uint32_t i = 0; i < 3; i++) {
+		HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+		HAL_Delay(FQ_MS/3);
+		HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
+		HAL_Delay(FQ_MS/3);
+	}
+	HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
+	for (uint32_t i = 0; i < 3; i++) {
+		HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
+		HAL_Delay(FQ_MS/3);
+		HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_SET);
+		HAL_Delay(FQ_MS/3);
+	}
+	HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
+	for (uint32_t i = 0; i < 3; i++) {
+		HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
+		HAL_Delay(FQ_MS/3);
+		HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_SET);
+		HAL_Delay(FQ_MS/3);
+	}
+	HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
+	for (uint32_t i = 0; i < 3; i++) {
+		HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_RESET);
+		HAL_Delay(FQ_MS/3);
+		HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_SET);
+		HAL_Delay(FQ_MS/3);
+	}
+	HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_RESET);
 }
 /* USER CODE END 0 */
 
@@ -114,25 +192,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(FQ_MS);
 	  HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_RESET);
-	  HAL_Delay(FQ_MS);
 
-	  if (led_mode == 0) {
-		  HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin, GPIO_PIN_SET);
-	  }
-	  else if (led_mode == 1) {
-		  HAL_GPIO_WritePin(GPIOD, LED_ORANGE_Pin, GPIO_PIN_SET);
-	  }
-	  else if (led_mode == 2) {
-		  HAL_GPIO_WritePin(GPIOD, LED_RED_Pin, GPIO_PIN_SET);
-	  }
-	  else {
-		  HAL_GPIO_WritePin(GPIOD, LED_BLUE_Pin, GPIO_PIN_SET);
-	  }
+	  if (led_mode == 0) led_mode_0();
+	  else if (led_mode == 1) led_mode_1();
+	  else if (led_mode == 2) led_mode_2();
+	  else led_mode_3();
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
@@ -346,8 +414,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : BUTTON_Pin */
   GPIO_InitStruct.Pin = BUTTON_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUTTON_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : BOOT1_Pin */
